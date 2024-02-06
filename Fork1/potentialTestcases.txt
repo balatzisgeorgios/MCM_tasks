@@ -1,0 +1,56 @@
+test("should return error message for invalid date format in ListOfPeriods", () => {
+  // given
+  const customer = {
+    ListOfPeriods: "12.06.2008- 11.07.2008|invalidDate - 11.11.2008"
+  };
+  // when
+  const result = extractDates(customer);
+  // then
+  expect(result[0]).toStrictEqual("string length is invalid");
+});
+
+test("should return empty list for empty ListOfPeriods", () => {
+  // given
+  const customer = {
+    ListOfPeriods: ""
+  };
+  // when
+  const result = extractDates(customer);
+  // then
+  expect(result).toStrictEqual([]);
+});
+
+test("should return array with one object with dates (multiple spaces)", () => {
+  // given
+  const customer = {
+    ListOfPeriods: "   15.03.2017    -    01.05.2017"
+  };
+  // when
+  const result = extractDates(customer);
+  // then
+  expect(result).toStrictEqual([
+    {
+      startDate: "15.03.2017",
+      endDate: "01.05.2017"
+    }
+  ]);
+});
+
+
+test("should return array with valid dates and error message", () => {
+  // given
+  const customer = {
+    ListOfPeriods: "15.03.2017 - 01.05.2017|invalidDate - 11.11.2008"
+  };
+  // when
+  const result = extractDates(customer);
+  // then
+  expect(result).toStrictEqual([
+    {
+      startDate: "15.03.2017",
+      endDate: "01.05.2017"
+    },
+    "string length is invalid"
+  ]);
+});
+

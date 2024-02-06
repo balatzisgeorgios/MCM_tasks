@@ -1,0 +1,62 @@
+test("should return error for invalid unit", () => {
+  // given
+  const amount = "5";
+  const unit = "invalidUnit";
+  const nonNegative = true;
+  // when
+  const result = toPositiveTemporal(amount, unit, nonNegative);
+  // then
+  expect(result).toStrictEqual("Invalid unit in toPositiveTemporal: invalidUnit");
+});
+
+
+test("should return error for non-numeric amount", () => {
+  // given
+  const amount = "invalidAmount";
+  const unit = "M";
+  const nonNegative = true;
+  // when
+  const result = toPositiveTemporal(amount, unit, nonNegative);
+  // then
+  expect(result).toStrictEqual("Invalid amount in toPositiveTemporal: invalidAmount");
+});
+
+test("should return error for negative input with nonNegative true", () => {
+  // given
+  const amount = "-5";
+  const unit = "M";
+  const nonNegative = true;
+  // when
+  const result = toPositiveTemporal(amount, unit, nonNegative);
+  // then
+  expect(result).toStrictEqual(
+    "Negative amount in toPositiveTemporal is invalid, unit: M"
+  );
+});
+
+test("should return error for zero input with nonNegative true", () => {
+  // given
+  const amount = "0";
+  const unit = "M";
+  const nonNegative = true;
+  // when
+  const result = toPositiveTemporal(amount, unit, nonNegative);
+  // then
+  expect(result).toStrictEqual(
+    "Amount zero in toPositiveTemporal is invalid, unit: M"
+  );
+});
+
+test("should return temporal object for positive input with nonNegative true", () => {
+  // given
+  const amount = "3";
+  const unit = "M";
+  const nonNegative = true;
+  // when
+  const result = toPositiveTemporal(amount, unit, nonNegative);
+  // then
+  expect(result).toStrictEqual({
+    months: "3"
+  });
+});
+
