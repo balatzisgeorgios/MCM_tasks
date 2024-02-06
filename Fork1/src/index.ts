@@ -34,6 +34,40 @@ const toExtractDates = (customer: { ListOfPeriods?: string }): Array<Dates | str
   return result;
 };
 
+/*
+//Altenative Implementierung
+const extractDates = (customer: any): Dates[] | string[] => {
+  const result: Dates[] = [];
+  const listOfPeriods = customer?.ListOfPeriods;
+
+  if (!listOfPeriods || listOfPeriods.toUpperCase() === "NULL") {
+    return result;
+  }
+
+  const periodsArray = listOfPeriods.split("|");
+
+  for (const period of periodsArray) {
+    const dates = period.split("-").map(date => date.trim());
+    
+    if (dates.length === 2) {
+      const startDate = dates[0];
+      const endDate = dates[1];
+
+      if (/^\d{2}\.\d{2}\.\d{4}$/.test(startDate) && /^\d{2}\.\d{2}\.\d{4}$/.test(endDate)) {
+        result.push({ startDate, endDate });
+      } else {
+        return [`Invalid date format in ListOfPeriods: ${period}`];
+      }
+    } else {
+      return [`Invalid date range in ListOfPeriods: ${period}`];
+    }
+  }
+
+  return result;
+};
+*/
+
+
 // Beispielaufrufe
 console.log(toExtractDates({ ListOfPeriods: '15.03.2017 - 01.05.2017' }));
 console.log(

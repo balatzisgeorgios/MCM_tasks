@@ -39,6 +39,39 @@ function toPositiveTemporal(amount: string, unit: string, nonNegative: boolean |
   return result;
 }
 
+/*
+//alternative implementation
+
+const toPositiveTemporal = (amount, unit, nonNegative) => {
+  const numericAmount = parseInt(amount);
+
+  if (numericAmount === 0 && nonNegative) {
+    return `amount zero in toPositiveTemporal is invalid, unit: ${unit}`;
+  }
+
+  const result = {};
+
+  switch (unit.toLowerCase()) {
+    case "m":
+      result.months = amount;
+      break;
+    case "y":
+    case "year":
+      result.years = amount;
+      break;
+    case "day":
+      result.days = amount;
+      break;
+    default:
+      // Assuming other units are treated as months
+      result.months = amount;
+  }
+
+  return result;
+};
+
+*/
+
 // Example usage:
 console.log(toPositiveTemporal('6', 'M')); // { months: '6' }
 console.log(toPositiveTemporal('1', 'Month', 'nonNegative')); // { months: '1' }
